@@ -8,6 +8,7 @@ namespace UserRegistrationProject.Controllers
 {
     public class HomeController : Controller
     {
+        // start of the app
         public ActionResult Index()
         {
             return View();
