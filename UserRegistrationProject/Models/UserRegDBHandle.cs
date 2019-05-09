@@ -13,7 +13,8 @@ namespace UserRegistrationProject.Models
         private SqlConnection con;
         private void connection()
         {
-            string constring = ConfigurationManager.ConnectionStrings["UserRegConnection"].ToString();
+            string constring = ConfigurationManager.ConnectionStrings["UserRegConnection"].ConnectionString;
+            
             con = new SqlConnection(constring);
         }
 
@@ -40,7 +41,7 @@ namespace UserRegistrationProject.Models
         }
 
         // ********** VIEW STUDENT DETAILS ********************
-        public List<UserDetail> GetUsers()
+        public List<UserDetail> GetUserList()
         {
             connection();
             List<UserDetail> userList = new List<UserDetail>();
