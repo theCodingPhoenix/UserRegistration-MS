@@ -23,30 +23,28 @@ namespace UserRegistrationProject.Controllers
             return View();
         }
 
+
         // POST: UserReg/Create
         [HttpPost]
         public ActionResult Create(UserDetail umodel)
         {
-                try
+            try
+            {
+                if (ModelState.IsValid)
                 {
-                    if (ModelState.IsValid)
+                    UserRegDBHandle udbh = new UserRegDBHandle();
+                    if (udbh.AddNewUser(umodel))
                     {
-                        UserRegDBHandle sdb = new UserRegDBHandle();
-                        if (sdb.AddNewUser(umodel))
-                        {
-                            ViewBag.Message = "User Details Added Successfully";
-                            ModelState.Clear();
-                        }
+                        ViewBag.Message = "User Details Added Successfully";
+                        ModelState.Clear();
                     }
-                    return View();
                 }
-                catch
-                {
-                ViewBag.Message = "Something went wrong";
-                    return View();
-         
-                }            
+                return View();
+            }
+            catch
+            {
+                return View();
+            }
         }
-
     }
 }
