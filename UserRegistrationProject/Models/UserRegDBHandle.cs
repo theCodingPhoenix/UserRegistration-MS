@@ -38,5 +38,35 @@ namespace UserRegistrationProject.Models
             else
                 return false;
         }
+
+        // ********** VIEW STUDENT DETAILS ********************
+        public List<UserDetail> GetUsers()
+        {
+            connection();
+            List<UserDetail> userList = new List<UserDetail>();
+
+            SqlCommand cmd = new SqlCommand("GetUserList", con);
+            cmd.CommandType = CommandType.StoredProcedure;
+            SqlDataAdapter sd = new SqlDataAdapter(cmd);
+            DataTable dt = new DataTable();
+
+            con.Open();
+            sd.Fill(dt);
+            con.Close();
+
+            foreach (DataRow dr in dt.Rows)
+            {
+                userList.Add(
+                    new UserDetail
+                    {
+                        
+                        Name = Convert.ToString(dr["Name"]),
+                        Email = Convert.ToString(dr["Email"]),
+   
+                    });
+            }
+            return userList;
+        }
+
     }
 }

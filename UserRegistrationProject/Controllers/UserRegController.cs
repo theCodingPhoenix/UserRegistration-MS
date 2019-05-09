@@ -18,7 +18,9 @@ namespace UserRegistrationProject.Controllers
         // GET: UserRegDB/Details/5
         public ActionResult Details(int id)
         {
-            return View();
+            UserRegDBHandle dbhandle = new UserRegDBHandle();
+            ModelState.Clear();
+            return View(dbhandle.GetUserList());
         }
 
         // GET: UserRegDB/Create
