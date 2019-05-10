@@ -9,7 +9,8 @@ SQL Server 2014 Express<br/>
     - Download, System Requirements, Installation Instructions to be found at https://www.microsoft.com/en-gb/download/details.aspx?id=42299 
 
 # Setup
-1) In your SQL Management Studio, run the SQL scripts provided in UserRegistration DB Script.txt.  <br/><br/>
+1) In your SQL Management Studio, run the SQL scripts provided in UserRegistration DB Script.txt.  <br/>
+- Search the FILENAME and replace XXXYour Local DB PathXXX with your local db path for SQL Server <br/>
 
 2) Get the Server name for your Web config to link to the local DB where you ran the previous scripts<br/>
 - goto the SQL Management studio, right click on the DB that has been created in previous step (UserRegistration) and click on 'Properties'<br/>
