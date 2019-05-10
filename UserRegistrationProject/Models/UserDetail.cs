@@ -23,6 +23,8 @@ namespace UserRegistrationProject.Models
         [Required(ErrorMessage = "Password is required.")]
         [DataType(DataType.Password)]
         [Display(Name = "Password")]
+        [MinLength(8, ErrorMessage = "Password must be atleast 8 characters")]
+
         public string SecurePassword { get; set; }
 
         [Required]
