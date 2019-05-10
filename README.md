@@ -9,7 +9,7 @@ SQL Server 2014 Express<br/>
     - Download, System Requirements, Installation Instructions to be found at https://www.microsoft.com/en-gb/download/details.aspx?id=42299 
 
 # Setup
-1) Clone this repo using the link provided and open up the project in Visual Studio.<br/>
+1) Clone this repo using the link provided and open up the project in Visual Studio.<br/><br/>
 
 2) In your SQL Management Studio, run the SQL scripts provided in UserRegistration DB Script.txt. <br/>
 - Search the FILENAME and replace XXXYour Local DB PathXXX with your local db path for SQL Server <br/><br/>
