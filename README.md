@@ -3,7 +3,7 @@ A single page to register users and save their credentials to DB.<br/>
 Project uses TSQL, ASP .NET MVC 5, C#
 
 # Installation
-Visual Studio 2019 Community<br/>
+Visual Studio 2019 Community Edition<br/>
     - Download from https://visualstudio.microsoft.com/vs/ <br/>
 SQL Server 2014 Express<br/>
     - Download, System Requirements, Installation Instructions to be found at https://www.microsoft.com/en-gb/download/details.aspx?id=42299 
@@ -20,6 +20,5 @@ SQL Server 2014 Express<br/>
 
 
 # Limitations
-- Support for Unit testing pending<br/>
 - At the moment DB script is a text file within the project, this could be added to its own source control in order to avoid hassle of having to transfer the changes to the text file<br/>
-
+- Support for unit testing pending and more test cases can be added to validate passwords / duplicate emails.
