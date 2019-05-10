@@ -5,17 +5,18 @@ using System.Web;
 using System.Data;
 using System.Data.SqlClient;
 using System.Configuration;
+using System.Security.Cryptography;
 
 namespace UserRegistrationProject.Models
 {
     public class UserRegDBHandle
     {
-        private SqlConnection con;
+        private SqlConnection sqlCon;
         private void connection()
         {
             string constring = ConfigurationManager.ConnectionStrings["UserRegConnection"].ConnectionString;
-            
-            con = new SqlConnection(constring);
+
+            sqlCon = new SqlConnection(constring);
         }
 
 
@@ -23,51 +24,45 @@ namespace UserRegistrationProject.Models
         public bool AddNewUser(UserDetail smodel)
         {
             connection();
-            SqlCommand cmd = new SqlCommand("AddNewUser", con);
-            cmd.CommandType = CommandType.StoredProcedure;
+            SqlCommand sqlQuery = new SqlCommand("AddNewUser", sqlCon);
+            sqlQuery.CommandType = CommandType.StoredProcedure;
 
-            cmd.Parameters.AddWithValue("@Name", smodel.Name);
-            cmd.Parameters.AddWithValue("@Email", smodel.Email);
-            cmd.Parameters.AddWithValue("@SecurePassword", smodel.SecurePassword);
+            sqlQuery.Parameters.AddWithValue("@Name", smodel.Name);
+            sqlQuery.Parameters.AddWithValue("@Email", smodel.Email);
 
-            con.Open();
-            int i = cmd.ExecuteNonQuery();
-            con.Close();
+            // create salt
+            byte[] salt;
+            new RNGCryptoServiceProvider().GetBytes(salt = new byte[16]);
 
+            // create hash
+            var pbkdf2 = new Rfc2898DeriveBytes(smodel.SecurePassword, salt, 10000);
+            byte[] hash = pbkdf2.GetBytes(20);
+
+            // combine the salt and hash
+            byte[] hashBytes = new byte[36];
+            Array.Copy(salt, 0, hashBytes, 0, 16);
+            Array.Copy(hash, 0, hashBytes, 16, 20);
+
+            // convert to base64
+            string savedPasswordHash = Convert.ToBase64String(hashBytes);
+            sqlQuery.Parameters.AddWithValue("@SecurePassword", savedPasswordHash);
+
+            // open the db connection
+            sqlCon.Open();
+
+            // execute the query
+            int i = sqlQuery.ExecuteNonQuery();
+
+            
+
+            // close the db connection
+            sqlCon.Close();
+
+            // if data has been inserted, return true else return false
             if (i >= 1)
                 return true;
             else
                 return false;
         }
-
-        // ********** VIEW STUDENT DETAILS ********************
-        public List<UserDetail> GetUserList()
-        {
-            connection();
-            List<UserDetail> userList = new List<UserDetail>();
-
-            SqlCommand cmd = new SqlCommand("GetUserList", con);
-            cmd.CommandType = CommandType.StoredProcedure;
-            SqlDataAdapter sd = new SqlDataAdapter(cmd);
-            DataTable dt = new DataTable();
-
-            con.Open();
-            sd.Fill(dt);
-            con.Close();
-
-            foreach (DataRow dr in dt.Rows)
-            {
-                userList.Add(
-                    new UserDetail
-                    {
-                        
-                        Name = Convert.ToString(dr["Name"]),
-                        Email = Convert.ToString(dr["Email"]),
-   
-                    });
-            }
-            return userList;
-        }
-
     }
 }

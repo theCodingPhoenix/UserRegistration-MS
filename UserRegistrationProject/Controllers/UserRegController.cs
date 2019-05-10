@@ -9,14 +9,7 @@ namespace UserRegistrationProject.Controllers
 {
     public class UserRegController : Controller
     {
-        // GET: UserRegDB
-        public ActionResult Index()
-        {
-            UserRegDBHandle dbhandle = new UserRegDBHandle();
-            ModelState.Clear();
-            return View(dbhandle.GetUserList());
-        }
-
+        
         // GET: UserReg/Create
         public ActionResult Create()
         {
